@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, render_template
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path="/static")
 
 @app.route("/")
 def test1():                           
@@ -17,8 +17,9 @@ def test2(username):
 
 @app.route("/jsontest")
 def jsontest():
-    username = request.args.get('user_name')
-    data = {'file' : username, 'text' : 'hi! jsontest!'}
+    username = request.args.get('email')
+    pwd = request.args.get('password')
+    data = {'file' : username, 'password' : pwd}
     return jsonify(data)
 
 @app.route("/login")
@@ -37,6 +38,10 @@ def login_test():
         return_data = {"auth" : "failed"}
 
     return jsonify(return_data)
+
+@app.route("/boot_login")
+def bootstrap_test():
+    return render_template("04.login.html")
 
 if __name__ == "__main__":              
     app.run(host="127.0.0.1", port="8123")
