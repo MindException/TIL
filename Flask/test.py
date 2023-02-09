@@ -1,10 +1,10 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 
 app = Flask(__name__)
 
 @app.route("/")
 def test1():                           
-    return "Server Open!!"
+    return render_template("02.login.html")
 
 @app.route("/id_test/<username>")
 def test2(username):
@@ -17,7 +17,8 @@ def test2(username):
 
 @app.route("/jsontest")
 def jsontest():
-    data = {'file' : 'jsontest', 'text' : 'hi! jsontest!'}
+    username = request.args.get('user_name')
+    data = {'file' : username, 'text' : 'hi! jsontest!'}
     return jsonify(data)
 
 @app.route("/login")
