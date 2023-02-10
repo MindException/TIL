@@ -43,5 +43,15 @@ def login_test():
 def bootstrap_test():
     return render_template("04.login.html")
 
+@app.route("/jinja_test")
+def jinja_test():
+    id = request.args.get('id')
+    if id != None:
+        id = int(id)
+    else:
+        id = -1
+
+    return render_template("05.template_test.html", data = id)
+
 if __name__ == "__main__":              
     app.run(host="127.0.0.1", port="8123")

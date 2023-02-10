@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <form action="http://127.0.0.1:8123//jinja_test" method="get">
+    <p>숫자 자릿수 세기</p>
+    {% if data >= 100 %}
+    <h3>세 자리 수 이상</h3>
+    {% elif data > 9 %}
+    <h3>두 자리 수</h3>
+    {% elif data > 0 %}
+    <h3>세 자리 수</h3>
+    {% elif data == -1 %}
+    <h3>아직 입력 안함</h3>
+    {% else %}
+    <h3>다시 입력</h3>
+    {% endif %}
+    <p><input type="text" name="id" /></p>
+    <p><input type="submit" value="submit" /></p>
+  </form>
+</body>
+</html>
