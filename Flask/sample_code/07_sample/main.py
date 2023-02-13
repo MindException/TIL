@@ -43,8 +43,8 @@ def test1():
         data2 = {'text1' : 'GET json', 'text2' : '성공!'}
         return make_response(jsonify(data2), 200)
 
-# 라우트팅은 기본이 GET이라 methods로 POST도 추가해줘야 한다.
-@app.route("/send_img", methods=['GET','POST'])
+# werkzeug-FileStorage 사용하여 이미지 저장
+@app.route("/send_img1", methods=['GET','POST'])
 def test2():
     
     parameter_dict = request.args.to_dict()
@@ -55,8 +55,27 @@ def test2():
 
     if request.method == "POST":
         f = request.files['file123']  # html에서 보내는 name이랑 맞아야한다.
-        f.save(secure_filename(f.filename))
+        print(f)
+        print(f)
+        f.save(secure_filename(f.filename)) # 파일이 저장된다. (단, 한글 파일 불가능)
         print(type(f))
+        return "파일 저장 완료"
+
+# 절대경로로 이미지 저장하기
+@app.route("/send_img2", methods=['GET','POST'])
+def test3():
+    
+    parameter_dict = request.args.to_dict()
+
+    if len(parameter_dict)  == 0:
+        if request.method == "GET":
+            return render_template("07.Vue-02.html")
+
+    if request.method == "POST":
+        f = request.files['file123']  # html에서 보내는 name이랑 맞아야한다.
+        # 이렇게 path를 절대경로 지정하면 한글이 가능하다. 
+        path = "I:\TIL\Flask\sample_code\\07_sample\이미지.jpg"
+        f.save(path) # 파일이 저장된다. (단, 한글 파일 불가능)
         return "파일 저장 완료"
 
 
