@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+
+    <form id = "test_axios">
+        <center>
+            <input type="file" name = "file123" id = "fileUpload" v-on:change="image_save"/>
+            <div v-if="preview"><img v-bind:src="preview"></div>
+            <!-- v-if는 if문이다. -->
+        </center>
+    </form>
+    <!-- form 안에 다가 버튼을 만들고 클릭하면 무조건 보내게 되어있다.-->
+    <!-- 그리고 무조건 get 방식으로 보내게 설계되어있다. 버튼을 따로 빼서 사용해야 한다. -->>
+    <div id = "button_axios">
+        <center>
+        <button  class="btn btn-primary" v-on:click="send_para">이미지 보내기</button>
+        <div v-if="preview2"><img v-bind:src="preview2"></div>
+        </center>
+    </div>
+
+    <!-- <script>
+        //이미지 데이터 가져오기
+        // vue가 없으면 이거 동작함
+    console.log("hi")
+    const fileinput = document.getElementById("fileUpload");
+    fileinput.onchange = () => {
+        const selectedFile = fileinput.files[0]
+        console.log(selectedFile)
+        console.log("hi")
+    };
+    </script> -->
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+    <!-- Vue Start -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script>
+        let file_img;      //Vue에서 전부 사용할 수 있도록 전역변수 선언
+        let img_form;
+        let a;
+
+        // #으로 하면 그 안에 있는 태그는 vue 문법 외의 문법은 다 씹힌다.
+        const img_app = new Vue({
+        el: "#test_axios",
+        data: {
+            preview: ''
+        },
+        methods: {
+            image_save: function (event) {  //이미지 저장시 change 이벤트 발생
+                // fileinput = document.querySelector("#fileUpload");   //Vue는 이걸로 id 가져온다.
+                
+                file_img = event.target.files[0] // 이미지를 가져옴
+                console.log("보낼 이미지 타입:" + typeof(file_img))
+
+                //가져온 이미지 출력하기
+                if (file_img && file_img.type.match(/^image\/(png|jpeg)$/)) {
+                    this.preview = window.URL.createObjectURL(file_img)
+                }
+                
+                img_form = new FormData()
+                img_form.append('test123', file_img)    // "여기가 name 값이다."
+        
+            },
+        },
+        });
+
+        // () => 는 화살표 함수로 함수명 지정없이 바로 만들어서 사용하는 문법으로 (인자값) => {함수 코드} 와 같은 느낌이다ㅑ.
+        // .then은 promise 함수인 비동기처리에서 나온 문법이다.
+        // promise에서 성공과 실패에 대한 정보를 반환하여 .them의 인자값으로 사용한다.
+        // .catch는 try-catch구문과 동일하게 error시에 발생하는 catch구문이다.
+        // 자바스크립트는 함수도 :로 value값으로 사용이 가능하다.
+        // send_para() {}는 원래 send_para(): function (){ }와 같다. 이것을 method shorthand라고 한다.
+        const button_app = new Vue({
+            el : "#button_axios",
+            data: {
+                preview2: ''
+            },
+            methods: {
+                send_para() {
+                    axios.post('http://localhost:8123/', img_form)
+                    .then((resp) => {
+                        const imgUrl = resp.data[0].files;
+                        
+                        //blob
+                        // const imgUrl = new Blob([resp.date[0].files], {type: 'image/png'})
+
+                        console.log("넘어가");
+
+
+                        if (imgUrl && imgUrl.type.match(/^image\/(png|jpeg)$/)) {
+                            console.log("들어옴")
+                            this.preview2 = window.URL.createObjectURL(imgUrl)
+                        }
+                        this.preview2 = window.URL.createObjectURL(imgUrl)
+                    })
+                    .catch((error) => {
+                        console.log("실패")
+                        console.log(error);
+                    });
+
+                },
+            },
+        })
+
+        </script>
+</body>
+</html>
