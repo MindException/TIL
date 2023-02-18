@@ -36,5 +36,9 @@ def sample():
         text_dict = {"text" : response_data + " 가 전송에 성공하였습니다."}
         return jsonify(text_dict)
 
+@app.route("/get_img", methods=['GET','POST'])
+def sample2():
+    return send_file("./flask_img.png", mimetype='image/png')
+
 if __name__ == "__main__":              
     app.run(host="127.0.0.1", port="8123")
