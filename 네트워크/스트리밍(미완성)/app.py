@@ -17,10 +17,14 @@ def image(data_image):
 
     print(type(data_image))
     data_image = data_image.split(",")[1]
-    print(data_image)
-    sbuf = io.StringIO()
-    sbuf.write(data_image)
+    # print("전: ", type(data_image))
+    # sbuf = io.StringIO() # 문자열을 파일 객체처럼 만든다.
+    # sbuf.write(data_image)
+    # print("후: ", type(data_image))
     b = io.BytesIO(base64.b64decode(data_image))
+    # 당연하겠지만 타입:  <class 'bytes'>으로 base64는 출력한다.
+    # b는 <class '_io.BytesIO'>를 출력한다.
+    print("타입: ", type(b))
     pimg = Image.open(b)
 
     # DO WHATEVER IMAGE PROCESSING HERE{

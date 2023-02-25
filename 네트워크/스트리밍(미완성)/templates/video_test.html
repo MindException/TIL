@@ -52,12 +52,16 @@
             });
         }
         const FPS = 22;
+
+        // setInterval은 주기적으로 반복하는 자바스크립트 함수이다.
+        // 
         setInterval(() => {
             var type = "image/jpg"
             var video_element = document.getElementById("videoElement")
             var frame = capture(video_element, 1)
             var data = frame.toDataURL(type);
             data = data.replace('data:' + type + ';base64,', '');
+            // url로 던진 것이 base64로 던졌다.
             socket.emit('image', data);
         }, 10000/FPS);
     
