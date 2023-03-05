@@ -97,3 +97,16 @@ cv2.waitKey()
 ```
 
 ## base64
+* Base64는 3byte(총24bit)를 6bit로 나누어서 4개의 문자로 표현한다.
+* 따라서 기존보다 33% 이상의 메모리를 사용한다.
+* 사용하는 이유는 json파일에 base64를 사용하여 이미지를 함께 보낼 수 있기 때문이다.
+
+```py
+import base64
+
+f = open("test.jpg", "rb")
+data = f.read()
+
+edata = base64.b64encode(data)          #인코딩
+ddata = base64.b64decode(edata)         #디코딩
+```

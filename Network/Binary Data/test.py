@@ -2,6 +2,7 @@ import io
 from PIL import Image
 import cv2
 import numpy as np
+import base64
 
 # IOStream 형태로 만든 것
 f = open("test.jpg", "rb")
@@ -18,7 +19,12 @@ data = f.read()
 # data = f.read()
 # print(data)
 
-encoded_img = np.fromstring(data, dtype = np.uint8)
+edata = base64.b64encode(data)
+ddata = base64.b64decode(edata)
+
+print(ddata)
+
+encoded_img = np.fromstring(ddata, dtype = np.uint8)
 img = cv2.imdecode(encoded_img, cv2.IMREAD_COLOR)
 cv2.imshow("test", img)
 cv2.waitKey()
