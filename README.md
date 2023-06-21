@@ -11,9 +11,10 @@ Today I learned / 공부한 내용을 요약 정리하는 공간
 3. 종합프로젝트 최종 경진대회 - 동상 (2022.06.16)
 
 ## 자격증
-1. DP-900 - Microsoft Certified: Azure Data Fundamentals (2022.12.17)
-2. AI-900 - Microsoft Certified: Azure AI Fundamentals (2022.12.03)
-3. 리눅스 마스터 2급 (2019.10.11)
+1. AZ-900 - Microsoft Certified: Azure Fundamentals (2023.06.21)
+2. DP-900 - Microsoft Certified: Azure Data Fundamentals (2022.12.17)
+3. AI-900 - Microsoft Certified: Azure AI Fundamentals (2022.12.03)
+4. 리눅스 마스터 2급 (2019.10.11)
 
 ## 교육훈련 / 연수
 
